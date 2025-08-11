@@ -1,1 +1,56 @@
 
+<div class="product-card">
+  <a href="{{ product.url }}">
+    <img src="{{ product.featured_image | image_url: width: 400 }}" 
+         alt="{{ product.featured_image.alt | escape }}" 
+         class="product-image"
+         loading="lazy">
+  </a>
+  
+  <div class="product-info">
+    <h3 class="product-title">
+      <a href="{{ product.url }}">{{ product.title }}</a>
+    </h3>
+    
+    <div class="product-price">
+      {% if product.compare_at_price > product.price %}
+        <span class="price-compare">${{ product.compare_at_price | money_without_currency }}</span>
+      {% endif %}
+      <span class="price-current">${{ product.price | money_without_currency }}</span>
+    </div>
+    
+    {% if product.description != blank %}
+      <p class="product-description">
+        {{ product.description | strip_html | truncate: 100 }}
+      </p>
+    {% endif %}
+    
+    <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="product-form">
+      {% unless product.has_only_default_variant %}
+        <select name="id" class="product-variant-select">
+          {% for variant in product.variants %}
+            <option value="{{ variant.id }}" 
+                    {% unless variant.available %}disabled{% endunless %}
+                    data-price="{{ variant.price }}"
+                    data-available="{{ variant.available }}">
+              {{ variant.title }}
+              {% unless variant.available %} - Sold Out{% endunless %}
+            </option>
+          {% endfor %}
+        </select>
+      {% else %}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+      {% endunless %}
+      
+      <button type="submit" 
+              class="add-to-cart"
+              {% unless product.available %}disabled{% endunless %}>
+        {% if product.available %}
+          Add to Cart
+        {% else %}
+          Sold Out
+        {% endif %}
+      </button>
+    </form>
+  </div>
+</div>
