@@ -1,1 +1,96 @@
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>{{ shop.name }}</h3>
+        <p>Your premier destination for professional pool and snooker equipment. Quality gear for serious players.</p>
+        <div class="social-links" style="margin-top: 1rem;">
+          {% if section.settings.facebook_url != blank %}
+            <a href="{{ section.settings.facebook_url }}" style="margin-right: 1rem;">📘</a>
+          {% endif %}
+          {% if section.settings.instagram_url != blank %}
+            <a href="{{ section.settings.instagram_url }}" style="margin-right: 1rem;">📷</a>
+          {% endif %}
+          {% if section.settings.twitter_url != blank %}
+            <a href="{{ section.settings.twitter_url }}" style="margin-right: 1rem;">🐦</a>
+          {% endif %}
+        </div>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="{{ routes.root_url }}">Home</a></li>
+          <li><a href="{{ collections.all.url }}">All Products</a></li>
+          <li><a href="{{ pages['about'].url }}">About Us</a></li>
+          <li><a href="{{ pages['contact'].url }}">Contact</a></li>
+          <li><a href="{{ pages['shipping'].url }}">Shipping Info</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Categories</h3>
+        <ul>
+          <li><a href="{{ collections['pool-cues'].url }}">Pool Cues</a></li>
+          <li><a href="{{ collections['snooker-cues'].url }}">Snooker Cues</a></li>
+          <li><a href="{{ collections['accessories'].url }}">Accessories</a></li>
+          <li><a href="{{ collections['tables'].url }}">Tables</a></li>
+          <li><a href="{{ collections['cases'].url }}">Cases</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Contact Info</h3>
+        <div style="margin-bottom: 0.5rem;">📞 {{ section.settings.phone | default: "(555) 123-4567" }}</div>
+        <div style="margin-bottom: 0.5rem;">✉️ {{ section.settings.email | default: "info@poolclubpro.com" }}</div>
+        <div>📍 {{ section.settings.address | default: "123 Pool Street, Billiards City, BC 12345" }}</div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; {{ 'now' | date: "%Y" }} {{ shop.name }}. All rights reserved. | 
+         <a href="{{ pages['privacy'].url }}">Privacy Policy</a> | 
+         <a href="{{ pages['terms'].url }}">Terms of Service</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone Number"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email Address"
+    },
+    {
+      "type": "textarea",
+      "id": "address",
+      "label": "Address"
+    },
+    {
+      "type": "url",
+      "id": "facebook_url",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "url",
+      "id": "twitter_url",
+      "label": "Twitter URL"
+    }
+  ]
+}
+{% endschema %}
 
